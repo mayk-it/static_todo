@@ -78,7 +78,7 @@ consteval bool any_two_words_match (const char* a, const char* b)
 
     for (size_t i = 0; i < a_num_words; ++i)
     {
-        for (int j = 0; j < b_num_words; ++j)
+        for (size_t j = 0; j < b_num_words; ++j)
         {
             if (words_match (a, b))
                 return true;
@@ -277,5 +277,5 @@ consteval int static_warn (bool)
 #define TODO_BEFORE(month, year, user_query, msg)                                                                                                                              \
     static_assert (static_todo::is_a_month (#month), "Enter a month in the format Jan, Feb, Dec, etc.");                                                                       \
     static_assert (! static_todo::should_break_compilation (__DATE__, year, static_todo::get_month_from_string (#month), STATIC_TODO_GIT_USERNAME, user_query), "TODO: " msg); \
-    auto STATIC_TODO_UNIQUE_NAME (_) = static_todo::static_warn (! static_todo::should_warn_about_upcoming_deadline (__DATE__, year, static_todo::get_month_from_string (#month), STATIC_TODO_GIT_USERNAME, user_query))
+    auto STATIC_TODO_UNIQUE_NAME (static_todo_warner_) = static_todo::static_warn (! static_todo::should_warn_about_upcoming_deadline (__DATE__, year, static_todo::get_month_from_string (#month), STATIC_TODO_GIT_USERNAME, user_query))
 #endif
