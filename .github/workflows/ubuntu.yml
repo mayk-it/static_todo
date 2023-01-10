@@ -52,11 +52,11 @@ jobs:
     - name: Build Release
       run: |
         rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{matrix.compiler.cxx}}
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{matrix.compiler.cxx}} -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Release
 
     - name: Build Debug
       run: |
         rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=${{matrix.compiler.cxx}}
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=${{matrix.compiler.cxx}} -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Debug

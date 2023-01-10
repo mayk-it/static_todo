@@ -19,11 +19,11 @@ jobs:
     - name: Build Release
       run: |
         rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Release
 
     - name: Build Debug
       run: |
         rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Debug

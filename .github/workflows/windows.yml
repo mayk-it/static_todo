@@ -20,7 +20,7 @@ jobs:
       shell: bash
       run: |
         rm -rf build
-        cmake -Bbuild -A Win32
+        cmake -Bbuild -A Win32 -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Release
         cmake --build build --config Debug
 
@@ -28,6 +28,6 @@ jobs:
       shell: bash
       run: |
         rm -rf build
-        cmake -Bbuild -A x64
+        cmake -Bbuild -A x64 -DSTATIC_TODO_GIT_USERNAME=jatin
         cmake --build build --config Release
         cmake --build build --config Debug
