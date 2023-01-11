@@ -42,6 +42,21 @@ Inspired by: https://github.com/aurelienrb/cpp-static-todo
   /Users/jatin/dev/static_todo/include/static_todo/static_todo.hpp:247:55: note: from 'diagnose_if' attribute on 'static_warn':
   consteval int static_warn (bool test) __attribute__ ((diagnose_if (! (test), "TODO_BEFORE deadline coming soon!", "warning")))
   ```
+  
+## Options
+
+When using `static_todo` with CMake, the CMake script will
+use `git` to get the user's Git username. If you'd like
+to override this, you could call CMake with `-DSTATIC_TODO_GIT_USERNAME="My Name"`.
+
+The CMake option `STATIC_TODO_DISABLE` can be used to disable
+`static_todo` in case you need to make a build and don't want
+to fight with your expired `TODO_BEFORE`s.
+
+The CMake option `STATIC_TODO_ENABLE_DEADLINE_APPROACHING_WARNINGS`
+can be used to turn on or off the "deadline approaching" warnings.
+Even though these warnings are on by default, they are currently only
+function with Clang.
 
 ## Integration
 
@@ -59,10 +74,10 @@ CPMAddPackage(
 
 ## Compiler compatibility
 
-* Clang/LLVM >= 9
+* Clang/LLVM >= 12
 * MSVC++ >= 14.11 / Visual Studio >= 2019
 * Xcode >= 11
-* GCC >= 9
+* GCC >= 11
 
 ## License
 

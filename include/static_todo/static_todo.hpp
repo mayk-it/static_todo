@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+#include <algorithm>
 #include <chrono>
 #include <string_view>
 
@@ -7,9 +9,16 @@
 #error "__DATE__ is not defined, which is required for TODO_BEFORE"
 #endif
 
+// MSVC does not have __has_attribute, so we can work around it
+#ifndef __has_attribute
+#define __has_attribute(x) 0
+#endif
+
 #ifdef STATIC_TODO_GIT_USERNAME
 constexpr std::string_view git_username = STATIC_TODO_GIT_USERNAME;
 static_assert (! git_username.empty(), "Your git username is empty, check your git config or CMakeLists.txt");
+#else
+constexpr std::string_view git_username = "*";
 #endif
 
 namespace static_todo
@@ -94,7 +103,7 @@ consteval bool any_two_words_match (const char* a, const char* b)
     return false;
 }
 
-constexpr const std::string_view months[12] = {
+constexpr std::array<std::string_view, 12> months = {
     "Jan",
     "Feb",
     "Mar",
@@ -145,12 +154,7 @@ consteval int get_year_from_string (const std::string_view date)
 
 consteval bool is_a_month (std::string_view month)
 {
-    for (auto i : months)
-    {
-        if (month[0] == i[0] && month[1] == i[1] && month[2] == i[2] && is_null (month[3]))
-            return true;
-    }
-    return false;
+    return std::find (months.begin(), months.end(), month) != months.end();
 }
 
 // Returns the month number (1..12) from an input string
@@ -215,7 +219,7 @@ consteval Date toDate (std::string_view date_str)
 
 consteval bool check_git_user (std::string_view current_git_username, std::string_view query_username)
 {
-    if (query_username == "*")
+    if (query_username == "*" || current_git_username == "*")
         return true;
     return any_two_words_match (current_git_username.data(), query_username.data());
 }
