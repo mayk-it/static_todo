@@ -74,8 +74,7 @@ CPMAddPackage(
 
 ## Compiler compatibility
 
-* Clang/LLVM >= 12
-* MSVC++ >= 14.11 / Visual Studio >= 2019
+* Visual Studio >= 2019
 * Xcode >= 11
 * GCC >= 11
 
