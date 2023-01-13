@@ -1,7 +1,7 @@
 #pragma once
 
-#include <array>
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <string_view>
 
@@ -14,6 +14,8 @@
 #define __has_attribute(x) 0
 #endif
 
+namespace static_todo
+{
 #ifdef STATIC_TODO_GIT_USERNAME
 constexpr std::string_view git_username = STATIC_TODO_GIT_USERNAME;
 static_assert (! git_username.empty(), "Your git username is empty, check your git config or CMakeLists.txt");
@@ -21,10 +23,10 @@ static_assert (! git_username.empty(), "Your git username is empty, check your g
 constexpr std::string_view git_username = "*";
 #endif
 
-namespace static_todo
+consteval bool is_whitespace (char c)
 {
-
-consteval bool is_whitespace (char c) { return c == ' ' || c == '\t'; }
+    return c == ' ' || c == '\t';
+}
 
 consteval bool is_null (char c) { return c == '\0'; }
 
@@ -161,11 +163,11 @@ consteval bool is_a_month (std::string_view month)
 consteval int get_month_from_string (const std::string_view date)
 {
     // Find matching month
-    for (int i = 0; i < 12; i++)
+    for (size_t i = 0; i < 12; i++)
     {
         const char* m = months[i].data();
         if (m[0] == date[0] && m[1] == date[1] && m[2] == date[2])
-            return i + 1;
+            return static_cast<int> (i + 1);
     }
     return 0;
 }
@@ -248,10 +250,13 @@ consteval bool should_warn_about_upcoming_deadline (std::string_view system_date
 }
 
 #if __has_attribute(diagnose_if) && STATIC_TODO_ENABLE_DEADLINE_APPROACHING_WARNINGS
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgcc-compat"
 consteval int static_warn (bool test) __attribute__ ((diagnose_if (! (test), "TODO_BEFORE deadline coming soon!", "warning")))
 {
     return 0;
 }
+#pragma clang diagnostic pop
 #else
 consteval int static_warn (bool)
 {
@@ -278,8 +283,8 @@ consteval int static_warn (bool)
  * Example:
  *   TODO_BEFORE(Jan, 2019, "refactor to use std::optional<> once we compile in C++17 mode");
  */
-#define TODO_BEFORE(month, year, user_query, msg)                                                                                                                              \
-    static_assert (static_todo::is_a_month (#month), "Enter a month in the format Jan, Feb, Dec, etc.");                                                                       \
-    static_assert (! static_todo::should_break_compilation (__DATE__, year, static_todo::get_month_from_string (#month), STATIC_TODO_GIT_USERNAME, user_query), "TODO: " msg); \
-    auto STATIC_TODO_UNIQUE_NAME (static_todo_warner_) = static_todo::static_warn (! static_todo::should_warn_about_upcoming_deadline (__DATE__, year, static_todo::get_month_from_string (#month), STATIC_TODO_GIT_USERNAME, user_query))
+#define TODO_BEFORE(month, year, user_query, msg)                                                                                                                               \
+    static_assert (static_todo::is_a_month (#month), "Enter a month in the format Jan, Feb, Dec, etc.");                                                                        \
+    static_assert (! static_todo::should_break_compilation (__DATE__, year, static_todo::get_month_from_string (#month), static_todo::git_username, user_query), "TODO: " msg); \
+    [[maybe_unused]] const int STATIC_TODO_UNIQUE_NAME (static_todo_warner_) = static_todo::static_warn (! static_todo::should_warn_about_upcoming_deadline (__DATE__, year, static_todo::get_month_from_string (#month), static_todo::git_username, user_query))
 #endif
