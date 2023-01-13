@@ -1,9 +1,9 @@
 # static_todo
 
-[![Tests (Ubuntu)](https://github.com/jatinchowdhury18/static_todo/workflows/ubuntu/badge.svg)](https://github.com/jatinchowdhury18/static_todo/actions/workflows/ubuntu.yml)
-[![Tests (Mac)](https://github.com/jatinchowdhury18/static_todo/workflows/macos/badge.svg)](https://github.com/jatinchowdhury18/static_todo/actions/workflows/macos.yml)
-[![Tests (Windows)](https://github.com/jatinchowdhury18/static_todo/workflows/windows/badge.svg)](https://github.com/jatinchowdhury18/static_todo/actions/workflows/windows.yml)
-[![License](https://img.shields.io/github/license/jatinchowdhury18/static_todo.svg)](LICENSE)
+[![Tests (Ubuntu)](https://github.com/mayk-it/static_todo/workflows/ubuntu/badge.svg)](https://github.com/mayk-it/static_todo/actions/workflows/ubuntu.yml)
+[![Tests (Mac)](https://github.com/mayk-it/static_todo/workflows/macos/badge.svg)](https://github.com/mayk-it/static_todo/actions/workflows/macos.yml)
+[![Tests (Windows)](https://github.com/mayk-it/static_todo/workflows/windows/badge.svg)](https://github.com/mayk-it/static_todo/actions/workflows/windows.yml)
+[![License](https://img.shields.io/github/license/mayk-it/static_todo.svg)](LICENSE)
 
 `static_todo` is a C++20 header which exports a `TODO_BEFORE` macro,
 which can be used to create compilation "time bombs", so that
