@@ -67,7 +67,7 @@ You can also use something like [CPM](https://github.com/TheLartians/CPM) which 
 ```cmake
 CPMAddPackage(
     NAME static_todo
-    GITHUB_REPOSITORY jatinchowdhury18/static_todo
+    GITHUB_REPOSITORY mayk-it/static_todo
     GIT_TAG x.y.z # Where `x.y.z` is the release version you want to use.
 )
 ```
