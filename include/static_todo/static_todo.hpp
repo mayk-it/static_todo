@@ -265,13 +265,13 @@ consteval int static_warn (bool)
 #endif
 } // namespace static_todo
 
-#if STATIC_TODO_DISABLE
-#define TODO_BEFORE(month, year, user_query, msg)
-#else
-
 #define STATIC_TODO_CONCAT_INTERNAL(x, y) x##y
 #define STATIC_TODO_CONCAT(x, y) STATIC_TODO_CONCAT_INTERNAL (x, y)
 #define STATIC_TODO_UNIQUE_NAME(base) STATIC_TODO_CONCAT (base, __COUNTER__)
+
+#if STATIC_TODO_DISABLE
+#define TODO_BEFORE(month, year, user_query, msg) [[maybe_unused]] const int STATIC_TODO_UNIQUE_NAME (static_todo_placeholder_) {}
+#else
 
 /**
  * TODO_BEFORE() inserts a compilation "time bomb" that will trigger a "TODO" build error a soon as
